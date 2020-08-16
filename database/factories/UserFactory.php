@@ -26,3 +26,10 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+
+$factory->afterCreating(User::class, function(User $user, Faker $faker){
+    factory(\App\Post::class, $faker->numberBetween(10, 20))->create([
+        'author_id' => $user->id
+    ]);
+});
